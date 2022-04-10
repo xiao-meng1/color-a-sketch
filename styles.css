@@ -1,0 +1,40 @@
+body {
+    font-family: Helvetica, sans-serif;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    margin: 0
+}
+
+h1 {
+    text-align: center;
+    height: 20vmin;
+    margin: 0;
+}
+
+#middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#grid {
+    width: 60vmin;
+    height: 60vmin;
+}
+
+#bottom {
+    display: flex;
+    justify-content: center;
+}
+
+#bottom-empty {
+    width: 60vmin;
+}
+
+#left-button, #right-button {
+    width: 20vmin;
+    height: 20vmin;
+}
