@@ -1,4 +1,4 @@
-body {
+#body {
     font-family: 'Alex Brush', sans-serif;
     color: white;
     display: flex;
@@ -10,7 +10,7 @@ body {
 }
 
 #top, #middle, #bottom {
-    background-color: red;
+    background-color: #b8141f;
 }
 
 
@@ -47,34 +47,48 @@ h1 {
     width: 70vmin;
 }
 
-#left-button, #right-button {
+#left-button-container, #right-button-container {
     width: 15vmin;
     height: 15vmin;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
 }
 
-#left-button-back, #right-button-back {
+#left-button, #right-button {
     position: absolute;
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 70%;
     border-radius: 50%;
     background-color: white;
 }
 
-#left-button-front {
+#left-button::before {
+    content: "";
+    position: absolute;
+    background-color: black;
+    width: 10%;
+    height: 10%;
+    border-radius: 50%;
+    transform: translate(450%, 80%);
+}
+
+#left-button::after {
+    content: "";
     position: absolute;
     width: 50%;
     height: 50%;
     border-radius: 50%;
+    transform: translate(50%, 50%);
     background-color: black;
 }
 
-#right-button-front {
-    position: absolute;
-    width: 40%;
-    height: 40%;
-    background-color: black;
-}
+.unselectable {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
