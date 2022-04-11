@@ -1,5 +1,6 @@
 handleButtonEvents();
 makeUnselectable(document.getElementById("body"));
+insertGrid();
 
 function handleButtonEvents() {
     const leftButton = document.querySelector("#left-button");
@@ -66,4 +67,18 @@ function changeButtonHue(transformDegree) {
 
     newhsl = `hsl(${hueDegree}, 100%, 50%)`;
     document.documentElement.style.setProperty("--sketchColor", newhsl);
+}
+
+function insertGrid() {
+    const numberOfSquares = 100;
+    const square = document.createElement("div");
+    const gridContainer = document.querySelector("#grid-container");
+    gridContainer.sideLength = Number(window.getComputedStyle(gridContainer).height.slice(0, -2));
+    gridContainer.borderWidth = Number(window.getComputedStyle(gridContainer).borderWidth.slice(0, -2));
+
+    square.style.height = (gridContainer.sideLength - 2 * gridContainer.borderWidth) / Math.sqrt(numberOfSquares) + "px";
+    square.style.width = square.style.height;
+    for (let i = 0; i < numberOfSquares; i++) {
+        gridContainer.appendChild(square.cloneNode(false));
+    }
 }

@@ -1,9 +1,16 @@
+html {
+    box-sizing: border-box;
+}
+ 
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 :root {
     --sketchColor: hsl(0, 100%, 50%);
 }
 
 #body {
-    box-sizing: border-box;
     font-family: 'Alex Brush', sans-serif;
     color: white;
     display: flex;
@@ -40,6 +47,7 @@ h1 {
 
 #grid-container {
     display: flex;
+    flex-wrap: wrap;
     width: 70vmin;
     height: 70vmin;
     border: solid 1vmin white;
