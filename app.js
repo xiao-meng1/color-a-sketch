@@ -9,9 +9,9 @@ function handleButtonEvents() {
         body.addEventListener("mousemove", rotate);
 
         function rotate(e) {
-            const result = -1 * (calculateDegree(e) - 90);
-            console.log(result);
-            leftButton.style.transform = `rotate(${result}deg)`;
+            const transformDegree = -1 * (calculateDegree(e) - 90);
+            leftButton.style.transform = `rotate(${transformDegree}deg)`;
+            changeButtonHue(transformDegree);
         }
 
         body.addEventListener("mouseup", () => {
@@ -51,4 +51,19 @@ function calculateDegree(e) {
     const deg = Math.floor(rad * (180 / Math.PI));
 
     return deg;
+}
+
+function changeButtonHue(transformDegree) {
+    let hueDegree;
+    let newhsl;
+
+    if (transformDegree < 0) {
+        hueDegree = (-1 * transformDegree) + 270;
+    }
+    else {
+        hueDegree = transformDegree;
+    }
+
+    newhsl = `hsl(${hueDegree}, 100%, 50%)`;
+    document.documentElement.style.setProperty("--color", newhsl);
 }

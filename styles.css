@@ -65,10 +65,14 @@ h1 {
     background-color: white;
 }
 
+:root {
+    --color: hsl(0, 100%, 50%);
+}
+
 #left-button::before {
     content: "";
     position: absolute;
-    background-color: black;
+    background-color: var(--color);
     width: 10%;
     height: 10%;
     border-radius: 50%;
@@ -82,7 +86,7 @@ h1 {
     height: 50%;
     border-radius: 50%;
     transform: translate(50%, 50%);
-    background-color: black;
+    background-color: var(--color);
 }
 
 .unselectable {
