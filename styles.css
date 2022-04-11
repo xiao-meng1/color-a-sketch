@@ -1,4 +1,9 @@
+:root {
+    --sketchColor: hsl(0, 100%, 50%);
+}
+
 #body {
+    box-sizing: border-box;
     font-family: 'Alex Brush', sans-serif;
     color: white;
     display: flex;
@@ -33,9 +38,13 @@ h1 {
     align-items: center;
 }
 
-#grid {
+#grid-container {
+    display: flex;
     width: 70vmin;
     height: 70vmin;
+    border: solid 1vmin white;
+    background-color: white;
+    border-radius: 3vmin;
 }
 
 #bottom {
@@ -65,14 +74,10 @@ h1 {
     background-color: white;
 }
 
-:root {
-    --color: hsl(0, 100%, 50%);
-}
-
 #left-button::before {
     content: "";
     position: absolute;
-    background-color: var(--color);
+    background-color: var(--sketchColor);
     width: 10%;
     height: 10%;
     border-radius: 50%;
@@ -86,7 +91,7 @@ h1 {
     height: 50%;
     border-radius: 50%;
     transform: translate(50%, 50%);
-    background-color: var(--color);
+    background-color: var(--sketchColor);
 }
 
 .unselectable {

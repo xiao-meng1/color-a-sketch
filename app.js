@@ -65,5 +65,5 @@ function changeButtonHue(transformDegree) {
     }
 
     newhsl = `hsl(${hueDegree}, 100%, 50%)`;
-    document.documentElement.style.setProperty("--color", newhsl);
+    document.documentElement.style.setProperty("--sketchColor", newhsl);
 }
