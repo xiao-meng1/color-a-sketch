@@ -86,13 +86,20 @@ h1 {
     border-radius: 50%;
 }
 
+.button-shadow {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    box-shadow: 0.6vw 0vw 0.2vw #98031f;
+}
+
 #left-button, #right-button {
     position: absolute;
     width: 70%;
     height: 70%;
     border-radius: 50%;
     background-color: #e7e5f4;;
-    box-shadow: 0.6vw 0vw 0.2vw #98031f;
 }
 
 #left-button::before {
