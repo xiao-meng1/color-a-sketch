@@ -1,7 +1,10 @@
+makeUnselectable(document.getElementById("body"));
 handleLeftButtonEvents();
 handleRightButtonEvents();
-makeUnselectable(document.getElementById("body"));
 updateGrid();
+toggleGridBorder();
+addGridEventListeners();
+addWindowResizeEvents();
 
 function makeUnselectable(node) {
     if (node.nodeType ===1) {
@@ -77,18 +80,21 @@ function handleRightButtonEvents() {
 
     rightButton.addEventListener("mousedown", () => {
         body.addEventListener("mousemove", rotate);
+        toggleGridBorder();
 
         function rotate(e) {
             const coordinateDegree = calculateRightButtonDegree(e)
             const transformDegree = -1 * (coordinateDegree - 90);
             rightButton.style.transform = `rotate(${transformDegree}deg)`;
             changeRightButtonSize(coordinateDegree);
+            updateGrid();
         }
 
         body.addEventListener("mouseup", () => {
             body.removeEventListener("mousemove", rotate);
-            removeGridBorder();
-        });
+            addGridEventListeners();
+            toggleGridBorder();
+        }, {once: true});
     });
 }
 
@@ -115,7 +121,6 @@ function calculateRightButtonDegree(e) {
 function changeRightButtonSize(coordinateDegree) {
     newSketchSize = Math.abs(Math.abs(coordinateDegree) * 2 / 9 - 60);
     document.documentElement.style.setProperty("--sketchSize", newSketchSize);
-    updateGrid();
 }
 
 function updateGrid() {
@@ -130,7 +135,9 @@ function updateGrid() {
     const square = document.createElement("div");
     square.style.height = (gridContainer.sideLength - 2 * gridContainer.borderWidth) / numSquaresPerSide + "px";
     square.style.width = square.style.height;
-    square.classList.add("grid");
+    square.classList.add("grid-square");
+    square.classList.add("visible-grid");
+    square.dataset.lightness = "100";
 
     const tempGridContainer = document.createElement("div");
     
@@ -141,9 +148,67 @@ function updateGrid() {
     gridContainer.replaceChildren(...tempGridContainer.children);
 }
 
-function removeGridBorder() {
-    const gridContainer = document.querySelectorAll(".grid");
-    gridContainer.forEach((grid) => {
-        grid.classList.remove("grid");
+function toggleGridBorder() {
+    const gridContainer = document.querySelectorAll(".grid-square");
+    gridContainer.forEach((gridSquare) => {
+        gridSquare.classList.toggle("visible-grid");
     })
+}
+
+function addGridEventListeners() {
+    const gridContainer = document.querySelector("#grid-container")
+    const gridNodeList = document.querySelectorAll(".grid-square");
+
+    gridNodeList.forEach((square) => {
+        square.addEventListener("mouseenter", () => {
+            const buttonSketchColor = window.getComputedStyle(gridContainer).getPropertyValue("--sketchColor");
+            const buttonHue = Number(buttonSketchColor.trim().split(",")[0].slice(4));
+            const squareBackgroundColor = window.getComputedStyle(square).getPropertyValue("background-color");
+            const squareHue = rgb2h(squareBackgroundColor);
+
+            if (squareHue !== buttonHue) {
+                square.dataset.lightness = 100;
+            }
+
+            let squareLightness = square.dataset.lightness;
+            let adjustedSketchColor;
+            let newSquareLightness;
+
+            if (squareLightness === "100") {
+                newSquareLightness = squareLightness - 20;
+                square.dataset.lightness = newSquareLightness;
+                adjustedSketchColor = buttonSketchColor.slice(0, -5) + newSquareLightness + "%)";
+            } else if (squareLightness === "80") {
+                newSquareLightness = squareLightness - 30;
+                square.dataset.lightness = newSquareLightness;
+                adjustedSketchColor = buttonSketchColor.slice(0, -4) + newSquareLightness + "%)";
+            } else if (squareLightness === "50") {
+                newSquareLightness = squareLightness - 5;
+                square.dataset.lightness = newSquareLightness;
+                adjustedSketchColor = buttonSketchColor.slice(0, -4) + newSquareLightness + "%)";
+            } else if (squareLightness === "45") {
+                newSquareLightness = squareLightness;
+                adjustedSketchColor = buttonSketchColor.slice(0, -4) + newSquareLightness + "%)";
+            }
+
+            square.style.backgroundColor = adjustedSketchColor;
+        });
+    })
+}
+
+function rgb2h(rgbString) {
+    const r = rgbString.split(",")[0].slice(4);
+    const g = rgbString.split(",")[1].slice(1);
+    const b = rgbString.split(",")[2].slice(1, -1);
+    const v=Math.max(r,g,b), c=v-Math.min(r,g,b), f=(1-Math.abs(v+v-c-1)); 
+    const h= c && ((v==r) ? (g-b)/c : ((v==g) ? 2+(b-r)/c : 4+(r-g)/c)); 
+    return Math.round(60*(h<0?h+6:h));
+  }
+
+function addWindowResizeEvents() {
+    window.addEventListener("resize", () => {
+        updateGrid();
+        toggleGridBorder();
+        addGridEventListeners();
+    });
 }

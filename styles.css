@@ -56,7 +56,11 @@ h1 {
     border-radius: 2vmin;
 }
 
-.grid {
+.grid-square {
+    background-color: white;
+}
+
+.visible-grid {
     border: solid lightgrey 1px;
 }
 
